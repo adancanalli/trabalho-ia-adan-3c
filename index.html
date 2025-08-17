@@ -1,56 +1,225 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Missão de IA — Quiz Sim/Não</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Missão IA - Questionário</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .btn-selected {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+        }
+    </style>
 </head>
-<body>
-  <main class="app" role="main">
-    <header class="header">
-      <h1>Missão de IA</h1>
-      <p class="subtitle">
-        Responda <strong>Sim</strong> ou <strong>Não</strong> às perguntas sobre Inteligência Artificial.
-      </p>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+    <header class="bg-indigo-700 text-white py-6">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-2xl md:text-3xl font-bold">Missão IA</h1>
+                    <p class="text-indigo-200">Teste seu conhecimento sobre Inteligência Artificial</p>
+                </div>
+                <div class="w-16 h-16 rounded-full bg-indigo-600 flex items-center justify-center">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/4efb0ab5-7af0-454b-ad59-c383c8ac177b.png" alt="Ícone de robô futurístico com design minimalista em branco sobre fundo azul" 
+                         class="w-10 h-10 object-contain">
+                </div>
+            </div>
+        </div>
     </header>
 
-    <section class="card" aria-labelledby="pergunta-label">
-      <div class="progress" aria-label="Progresso do questionário">
-        <div id="progressBar" class="progress__bar" style="width: 0%"></div>
-      </div>
+    <main class="flex-grow container mx-auto px-4 py-8">
+        <div class="max-w-3xl mx-auto bg-white rounded-xl shadow-md overflow-hidden p-6 mb-6 fade-in">
+            <div class="text-center mb-6">
+                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/f31730b5-5683-4008-8c93-f72ea63e6c96.png" alt="Fundo tecnológico abstrato com linhas de dados fluindo e ícones de IA" 
+                     class="w-full h-auto rounded-lg mb-4">
+                <h2 class="text-2xl font-bold text-gray-800 mb-2">Questionário sobre Inteligência Artificial</h2>
+                <p class="text-gray-600">Responda as perguntas abaixo para testar seu conhecimento sobre IA</p>
+            </div>
 
-      <div class="question-box">
-        <h2 id="pergunta-label" class="question" aria-live="polite"></h2>
-        <div class="actions">
-          <button id="btnSim" class="btn btn--yes" type="button" aria-label="Responder Sim">
-            ✅ Sim
-          </button>
-          <button id="btnNao" class="btn btn--no" type="button" aria-label="Responder Não">
-            ❌ Não
-          </button>
+            <div id="quiz-container" class="space-y-8">
+                <!-- Perguntas serão inseridas aqui pelo JavaScript -->
+            </div>
+
+            <div id="result-container" class="hidden mt-8 p-6 bg-indigo-50 rounded-lg">
+                <h3 class="text-xl font-semibold text-indigo-800 mb-4">Seu Resultado:</h3>
+                <div id="result-content" class="space-y-4">
+                    <!-- Resultado será inserido aqui -->
+                </div>
+                <button id="restart-btn" class="mt-6 px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">
+                    Refazer Questionário
+                </button>
+            </div>
         </div>
+    </main>
 
-        <p id="feedback" class="feedback" role="status" aria-live="polite"></p>
-
-        <div class="nav">
-          <button id="btnProxima" class="btn btn--ghost" type="button">
-            Próxima pergunta ▶
-          </button>
-          <button id="btnReiniciar" class="btn btn--ghost" type="button" hidden>
-            Reiniciar 🔄
-          </button>
+    <footer class="bg-gray-800 text-white py-6">
+        <div class="container mx-auto px-4 text-center">
+            <p>© 2023 Missão IA - Todos os direitos reservados</p>
         </div>
-      </div>
-    </section>
-
-    <footer class="footer">
-      <small>
-        Dica: use <kbd>Tab</kbd> para navegar e <kbd>Enter</kbd> para acionar os botões.
-      </small>
     </footer>
-  </main>
 
-  <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const questions = [
+                {
+                    id: 1,
+                    text: "Você acredita que a IA pode alcançar consciência similar à humana no futuro?",
+                    answered: false,
+                    answer: null
+                },
+                {
+                    id: 2,
+                    text: "A IA já está presente no seu dia a dia mais do que você imagina?",
+                    answered: false,
+                    answer: null
+                },
+                {
+                    id: 3,
+                    text: "Você se preocupa com a possibilidade de a IA substituir empregos?",
+                    answered: false,
+                    answer: null
+                },
+                {
+                    id: 4,
+                    text: "Acredita que a IA pode ajudar a resolver problemas globais como mudanças climáticas?",
+                    answered: false,
+                    answer: null
+                },
+                {
+                    id: 5,
+                    text: "Você já usou alguma ferramenta de IA como ChatGPT ou Midjourney?",
+                    answered: false,
+                    answer: null
+                }
+            ];
+
+            const quizContainer = document.getElementById('quiz-container');
+            const resultContainer = document.getElementById('result-container');
+            const resultContent = document.getElementById('result-content');
+            const restartBtn = document.getElementById('restart-btn');
+
+            // Renderizar perguntas
+            function renderQuestions() {
+                quizContainer.innerHTML = '';
+                questions.forEach((question, index) => {
+                    const questionElement = document.createElement('div');
+                    questionElement.className = 'p-6 border border-gray-200 rounded-lg';
+                    questionElement.innerHTML = `
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4">${index + 1}. ${question.text}</h3>
+                        <div class="flex space-x-4">
+                            <button 
+                                data-question-id="${question.id}" 
+                                data-answer="yes" 
+                                class="yes-btn px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition ${question.answer === 'yes' ? 'btn-selected' : ''}">
+                                Sim
+                            </button>
+                            <button 
+                                data-question-id="${question.id}" 
+                                data-answer="no" 
+                                class="no-btn px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition ${question.answer === 'no' ? 'btn-selected' : ''}">
+                                Não
+                            </button>
+                        </div>
+                    `;
+                    quizContainer.appendChild(questionElement);
+                });
+
+                // Adicionar botão de finalizar se todas as perguntas foram respondidas
+                const allAnswered = questions.every(q => q.answered);
+                if (allAnswered) {
+                    const finishBtn = document.createElement('button');
+                    finishBtn.className = 'mt-6 px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition font-medium text-lg';
+                    finishBtn.textContent = 'Ver Resultado';
+                    finishBtn.addEventListener('click', showResults);
+                    quizContainer.appendChild(finishBtn);
+                }
+            }
+
+            // Manipulador de eventos para os botões Sim/Não
+            quizContainer.addEventListener('click', function(e) {
+                if (e.target.classList.contains('yes-btn') || e.target.classList.contains('no-btn')) {
+                    const questionId = parseInt(e.target.getAttribute('data-question-id'));
+                    const answer = e.target.getAttribute('data-answer');
+                    
+                    // Atualizar a questão correspondente
+                    const question = questions.find(q => q.id === questionId);
+                    if (question) {
+                        question.answered = true;
+                        question.answer = answer;
+                        
+                        // Remover seleção dos botões da mesma pergunta
+                        document.querySelectorAll(`[data-question-id="${questionId}"]`).forEach(btn => {
+                            btn.classList.remove('btn-selected');
+                        });
+                        
+                        // Adicionar seleção ao botão clicado
+                        e.target.classList.add('btn-selected');
+                        
+                        // Re-renderizar perguntas para atualizar visualização
+                        renderQuestions();
+                    }
+                }
+            });
+
+            // Mostrar resultados
+            function showResults() {
+                const yesAnswers = questions.filter(q => q.answer === 'yes').length;
+                const totalQuestions = questions.length;
+                const percentage = Math.round((yesAnswers / totalQuestions) * 100);
+                
+                let resultMessage = '';
+                if (percentage >= 80) {
+                    resultMessage = 'Você é um especialista em IA! Tanto conhecimento impressiona.';
+                } else if (percentage >= 50) {
+                    resultMessage = 'Você está no caminho certo! Conhece bastante sobre IA, mas ainda pode aprender mais.';
+                } else {
+                    resultMessage = 'Há muito para explorar no mundo da IA! Que tal pesquisar mais sobre o assunto?';
+                }
+                
+                resultContent.innerHTML = `
+                    <p class="text-lg">Você respondeu <span class="font-bold">"Sim"</span> para ${yesAnswers} de ${totalQuestions} perguntas (${percentage}%).</p>
+                    <p class="text-lg">${resultMessage}</p>
+                    
+                    <div class="mt-6 p-4 bg-white rounded-lg">
+                        <h4 class="font-semibold mb-2">Suas respostas:</h4>
+                        <ul class="space-y-2">
+                            ${questions.map(q => `
+                                <li class="flex items-start">
+                                    <span class="inline-block w-6 h-6 rounded-full ${q.answer === 'yes' ? 'bg-green-500' : 'bg-red-500'} mr-2 mt-1"></span>
+                                    <span>${q.text} - <span class="font-medium">${q.answer === 'yes' ? 'Sim' : 'Não'}</span></span>
+                                </li>
+                            `).join('')}
+                        </ul>
+                    </div>
+                `;
+                
+                quizContainer.classList.add('hidden');
+                resultContainer.classList.remove('hidden');
+            }
+
+            // Botão para reiniciar
+            restartBtn.addEventListener('click', function() {
+                questions.forEach(q => {
+                    q.answered = false;
+                    q.answer = null;
+                });
+                resultContainer.classList.add('hidden');
+                quizContainer.classList.remove('hidden');
+                renderQuestions();
+            });
+
+            // Inicializar
+            renderQuestions();
+        });
+    </script>
 </body>
 </html>
+
