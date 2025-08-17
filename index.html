@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Missão de IA</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Missão de Inteligência Artificial</h1>
+            <p>Responda às perguntas para avançar na missão</p>
+        </header>
+        
+        <main>
+            <div id="mission-progress">
+                <div class="progress-bar" id="progress-bar"></div>
+                <span id="progress-text">0% completo</span>
+            </div>
+            
+            <div class="mission-question" id="question-container">
+                <h2 id="question-text">Carregando missão...</h2>
+                <div class="answer-buttons">
+                    <button class="btn btn-yes" id="btn-yes">Sim</button>
+                    <button class="btn btn-no" id="btn-no">Não</button>
+                </div>
+            </div>
+            
+            <div id="mission-feedback"></div>
+            
+            <div class="mission-result" id="mission-result" style="display: none;">
+                <h2 id="result-title">Missão Concluída!</h2>
+                <p id="result-message"></p>
+                <button class="btn btn-restart" id="btn-restart">Reiniciar Missão</button>
+            </div>
+        </main>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
