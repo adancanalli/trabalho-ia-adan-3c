@@ -1,42 +1,56 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Missão de IA</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Missão de IA — Quiz Sim/Não</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Missão de Inteligência Artificial</h1>
-            <p>Responda às perguntas para avançar na missão</p>
-        </header>
-        
-        <main>
-            <div id="mission-progress">
-                <div class="progress-bar" id="progress-bar"></div>
-                <span id="progress-text">0% completo</span>
-            </div>
-            
-            <div class="mission-question" id="question-container">
-                <h2 id="question-text">Carregando missão...</h2>
-                <div class="answer-buttons">
-                    <button class="btn btn-yes" id="btn-yes">Sim</button>
-                    <button class="btn btn-no" id="btn-no">Não</button>
-                </div>
-            </div>
-            
-            <div id="mission-feedback"></div>
-            
-            <div class="mission-result" id="mission-result" style="display: none;">
-                <h2 id="result-title">Missão Concluída!</h2>
-                <p id="result-message"></p>
-                <button class="btn btn-restart" id="btn-restart">Reiniciar Missão</button>
-            </div>
-        </main>
-    </div>
-    
-    <script src="script.js"></script>
+  <main class="app" role="main">
+    <header class="header">
+      <h1>Missão de IA</h1>
+      <p class="subtitle">
+        Responda <strong>Sim</strong> ou <strong>Não</strong> às perguntas sobre Inteligência Artificial.
+      </p>
+    </header>
+
+    <section class="card" aria-labelledby="pergunta-label">
+      <div class="progress" aria-label="Progresso do questionário">
+        <div id="progressBar" class="progress__bar" style="width: 0%"></div>
+      </div>
+
+      <div class="question-box">
+        <h2 id="pergunta-label" class="question" aria-live="polite"></h2>
+        <div class="actions">
+          <button id="btnSim" class="btn btn--yes" type="button" aria-label="Responder Sim">
+            ✅ Sim
+          </button>
+          <button id="btnNao" class="btn btn--no" type="button" aria-label="Responder Não">
+            ❌ Não
+          </button>
+        </div>
+
+        <p id="feedback" class="feedback" role="status" aria-live="polite"></p>
+
+        <div class="nav">
+          <button id="btnProxima" class="btn btn--ghost" type="button">
+            Próxima pergunta ▶
+          </button>
+          <button id="btnReiniciar" class="btn btn--ghost" type="button" hidden>
+            Reiniciar 🔄
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <small>
+        Dica: use <kbd>Tab</kbd> para navegar e <kbd>Enter</kbd> para acionar os botões.
+      </small>
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
 </body>
 </html>

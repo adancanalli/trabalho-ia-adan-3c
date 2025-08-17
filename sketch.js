@@ -1,140 +1,117 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Elementos do DOM
-    const questionText = document.getElementById('question-text');
-    const btnYes = document.getElementById('btn-yes');
-    const btnNo = document.getElementById('btn-no');
-    const btnRestart = document.getElementById('btn-restart');
-    const progressBar = document.getElementById('progress-bar');
-    const progressText = document.getElementById('progress-text');
-    const missionFeedback = document.getElementById('mission-feedback');
-    const questionContainer = document.getElementById('question-container');
-    const missionResult = document.getElementById('mission-result');
-    const resultMessage = document.getElementById('result-message');
-    const resultTitle = document.getElementById('result-title');
+// Perguntas e feedback customizado para Sim/Não
+const perguntas = [
+  {
+    texto: "IA pode aprender com dados para melhorar seu desempenho ao longo do tempo?",
+    feedbackSim: "Correto! Aprendizado de máquina permite que modelos melhorem com dados.",
+    feedbackNao: "Na verdade, pode sim: técnicas como aprendizado supervisionado fazem isso."
+  },
+  {
+    texto: "Todo sistema baseado apenas em regras fixas (sem aprender) é considerado IA moderna?",
+    feedbackSim: "Nem sempre. Sistemas puramente baseados em regras não 'aprendem' com dados.",
+    feedbackNao: "Certo! Regra fixa não é, por si só, IA moderna baseada em aprendizado."
+  },
+  {
+    texto: "IA generativa pode criar imagens, textos e até códigos a partir de instruções?",
+    feedbackSim: "Exato! Modelos generativos produzem conteúdo novo a partir de prompts.",
+    feedbackNao: "Pode sim! Modelos generativos são usados para imagens, textos, áudio e mais."
+  },
+  {
+    texto: "É importante considerar ética e viés ao treinar e usar sistemas de IA?",
+    feedbackSim: "Perfeito. Avaliar viés, privacidade e impacto social é essencial.",
+    feedbackNao: "É fundamental considerar ética/viés para reduzir danos e injustiças."
+  }
+];
 
-    // Perguntas da missão
-    const questions = [
-        {
-            question: "Você acredita que a IA pode superar a inteligência humana no futuro?",
-            feedback: {
-                yes: "Interessante! Muitos especialistas discutem essa possibilidade.",
-                no: "Você é cauteloso sobre as capacidades da IA. Isso é compreensível."
-            }
-        },
-        {
-            question: "A IA deve ter direitos semelhantes aos humanos se alcançar consciência?",
-            feedback: {
-                yes: "Uma visão progressista! Esse é um tópico ético importante.",
-                no: "Você prefere manter distinções claras entre humanos e máquinas."
-            }
-        },
-        {
-            question: "Você usaria um assistente de IA para tomar decisões importantes na sua vida?",
-            feedback: {
-                yes: "A IA pode oferecer insights valiosos para decisões complexas!",
-                no: "Você valoriza o julgamento humano acima das recomendações de máquinas."
-            }
-        },
-        {
-            question: "A IA representa mais oportunidades do que riscos para a sociedade?",
-            feedback: {
-                yes: "Otimista! A IA certamente tem potencial para resolver grandes problemas.",
-                no: "Você está atento aos possíveis perigos da tecnologia avançada."
-            }
-        },
-        {
-            question: "Você acha que a IA eventualmente desenvolverá emoções genuínas?",
-            feedback: {
-                yes: "Fascinante! A natureza da consciência ainda é um mistério.",
-                no: "Você vê emoções como algo exclusivamente biológico."
-            }
-        }
-    ];
+// Estado do quiz
+let indice = 0;
 
-    // Estado da missão
-    let currentQuestion = 0;
-    let answers = [];
-    let missionComplete = false;
+// Elementos
+const perguntaEl   = document.getElementById("pergunta-label");
+const feedbackEl   = document.getElementById("feedback");
+const btnSim       = document.getElementById("btnSim");
+const btnNao       = document.getElementById("btnNao");
+const btnProxima   = document.getElementById("btnProxima");
+const btnReiniciar = document.getElementById("btnReiniciar");
+const progressBar  = document.getElementById("progressBar");
 
-    // Inicializar missão
-    function initMission() {
-        currentQuestion = 0;
-        answers = [];
-        missionComplete = false;
-        questionContainer.style.display = 'block';
-        missionResult.style.display = 'none';
-        missionFeedback.textContent = '';
-        updateProgress();
-        showQuestion();
+// Inicia a interface
+function carregarPergunta() {
+  const atual = perguntas[indice];
+  perguntaEl.textContent = `Pergunta ${indice + 1}/${perguntas.length}: ${atual.texto}`;
+  feedbackEl.textContent = "";
+  btnProxima.disabled = true;
+  btnSim.disabled = false;
+  btnNao.disabled = false;
+  btnSim.focus();
+  atualizarProgresso();
+}
+
+function atualizarProgresso() {
+  const pct = Math.round((indice / perguntas.length) * 100);
+  progressBar.style.width = `${pct}%`;
+  progressBar.setAttribute("aria-valuenow", String(pct));
+}
+
+function responder(tipo) {
+  const atual = perguntas[indice];
+  const texto = tipo === "sim" ? atual.feedbackSim : atual.feedbackNao;
+  feedbackEl.textContent = texto;
+
+  // Trava os botões para evitar múltiplos cliques
+  btnSim.disabled = true;
+  btnNao.disabled = true;
+  btnProxima.disabled = false;
+  btnProxima.focus();
+}
+
+function proxima() {
+  if (indice < perguntas.length - 1) {
+    indice++;
+    carregarPergunta();
+  } else {
+    finalizar();
+  }
+}
+
+function finalizar() {
+  progressBar.style.width = "100%";
+  perguntaEl.textContent = "Missão concluída! 🚀";
+  feedbackEl.textContent = "Você respondeu todas as perguntas. Quer tentar novamente?";
+  btnSim.disabled = true;
+  btnNao.disabled = true;
+  btnProxima.hidden = true;
+  btnReiniciar.hidden = false;
+  btnReiniciar.focus();
+}
+
+function reiniciar() {
+  indice = 0;
+  btnProxima.hidden = false;
+  btnReiniciar.hidden = true;
+  carregarPergunta();
+}
+
+// Listeners (após o DOM estar pronto)
+document.addEventListener("DOMContentLoaded", () => {
+  carregarPergunta();
+
+  btnSim.addEventListener("click", () => responder("sim"));
+  btnNao.addEventListener("click", () => responder("nao"));
+  btnProxima.addEventListener("click", proxima);
+  btnReiniciar.addEventListener("click", reiniciar);
+
+  // Acessibilidade: Enter/Barra de Espaço nos botões já funciona, mas
+  // adicionamos atalhos opcionais: S = Sim, N = Não, P = Próxima, R = Reiniciar
+  document.addEventListener("keydown", (e) => {
+    const key = e.key.toLowerCase();
+    if (key === "s") {
+      if (!btnSim.disabled) btnSim.click();
+    } else if (key === "n") {
+      if (!btnNao.disabled) btnNao.click();
+    } else if (key === "p") {
+      if (!btnProxima.disabled && !btnProxima.hidden) btnProxima.click();
+    } else if (key === "r") {
+      if (!btnReiniciar.hidden) btnReiniciar.click();
     }
-
-    // Mostrar pergunta atual
-    function showQuestion() {
-        if (currentQuestion < questions.length) {
-            questionText.textContent = questions[currentQuestion].question;
-        } else {
-            completeMission();
-        }
-    }
-
-    // Atualizar barra de progresso
-    function updateProgress() {
-        const progress = (currentQuestion / questions.length) * 100;
-        progressBar.style.width = `${progress}%`;
-        progressText.textContent = `${Math.round(progress)}% completo`;
-    }
-
-    // Lidar com resposta
-    function handleAnswer(answer) {
-        if (missionComplete) return;
-        
-        const feedback = answer ? 
-            questions[currentQuestion].feedback.yes : 
-            questions[currentQuestion].feedback.no;
-        
-        answers.push({
-            question: questions[currentQuestion].question,
-            answer: answer ? 'Sim' : 'Não',
-            feedback: feedback
-        });
-        
-        missionFeedback.textContent = feedback;
-        currentQuestion++;
-        updateProgress();
-        
-        // Pequeno atraso antes de mostrar a próxima pergunta
-        setTimeout(() => {
-            missionFeedback.textContent = '';
-            showQuestion();
-        }, 1500);
-    }
-
-    // Concluir missão
-    function completeMission() {
-        missionComplete = true;
-        questionContainer.style.display = 'none';
-        missionResult.style.display = 'block';
-        
-        // Analisar respostas
-        const yesCount = answers.filter(a => a.answer === 'Sim').length;
-        const noCount = answers.filter(a => a.answer === 'Não').length;
-        
-        resultTitle.textContent = "Missão Concluída!";
-        
-        if (yesCount > noCount) {
-            resultMessage.textContent = `Você é otimista sobre IA! Respondeu "Sim" a ${yesCount} de ${questions.length} perguntas. A IA tem um grande potencial e você reconhece isso.`;
-        } else if (noCount > yesCount) {
-            resultMessage.textContent = `Você é cauteloso com a IA! Respondeu "Não" a ${noCount} de ${questions.length} perguntas. Sua prudência é importante para o desenvolvimento responsável da tecnologia.`;
-        } else {
-            resultMessage.textContent = `Você tem uma visão equilibrada sobre IA! Respondeu igualmente "Sim" e "Não". Manter o equilíbrio é crucial nesse campo em rápida evolução.`;
-        }
-    }
-
-    // Event listeners
-    btnYes.addEventListener('click', () => handleAnswer(true));
-    btnNo.addEventListener('click', () => handleAnswer(false));
-    btnRestart.addEventListener('click', initMission);
-
-    // Iniciar a missão
-    initMission();
+  });
 });
