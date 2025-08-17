@@ -19,7 +19,7 @@ header {
 }
 
 header h1 {
-    color: #2c3e50;
+    color: #4a00e0;
 }
 
 #mission-progress {
@@ -37,7 +37,7 @@ header h1 {
 
 .progress-bar div {
     height: 100%;
-    background-color: #3498db;
+    background-color: #8e2de2;
     width: 0%;
     transition: width 0.3s ease;
 }
@@ -67,38 +67,38 @@ header h1 {
 }
 
 .btn-yes {
-    background-color: #2ecc71;
+    background-color: #00c853;
     color: white;
 }
 
 .btn-yes:hover {
-    background-color: #27ae60;
+    background-color: #00b34a;
 }
 
 .btn-no {
-    background-color: #e74c3c;
+    background-color: #ff3d00;
     color: white;
 }
 
 .btn-no:hover {
-    background-color: #c0392b;
+    background-color: #e03500;
 }
 
 .btn-restart {
-    background-color: #3498db;
+    background-color: #2979ff;
     color: white;
     display: block;
     margin: 20px auto 0;
 }
 
 .btn-restart:hover {
-    background-color: #2980b9;
+    background-color: #1a68e6;
 }
 
 #mission-feedback {
     min-height: 50px;
     padding: 10px;
-    color: #3498db;
+    color: #8e2de2;
     font-weight: bold;
     text-align: center;
 }

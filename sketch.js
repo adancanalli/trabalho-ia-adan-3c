@@ -12,20 +12,20 @@ document.addEventListener('DOMContentLoaded', function() {
     const resultMessage = document.getElementById('result-message');
     const resultTitle = document.getElementById('result-title');
 
-    // Perguntas da missão
+    // Perguntas da missão atualizadas
     const questions = [
         {
-            question: "Você acredita que a IA pode superar a inteligência humana no futuro?",
+            question: "Você acha que a IA generativa (como ChatGPT) vai substituir trabalhos criativos?",
             feedback: {
-                yes: "Interessante! Muitos especialistas discutem essa possibilidade.",
-                no: "Você é cauteloso sobre as capacidades da IA. Isso é compreensível."
+                yes: "É uma preocupação válida, mas talvez a IA possa colaborar em vez de substituir.",
+                no: "Você acredita no valor único da criatividade humana!"
             }
         },
         {
-            question: "A IA deve ter direitos semelhantes aos humanos se alcançar consciência?",
+            question: "A IA deve ser regulamentada por governos para evitar riscos?",
             feedback: {
-                yes: "Uma visão progressista! Esse é um tópico ético importante.",
-                no: "Você prefere manter distinções claras entre humanos e máquinas."
+                yes: "Regulação responsável pode ajudar a guiar o desenvolvimento seguro da IA.",
+                no: "Muita regulamentação pode atrapalhar a inovação. Visão interessante!"
             }
         },
         {
