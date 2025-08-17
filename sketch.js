@@ -80,8 +80,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Atualizar barra de progresso
     function updateProgress() {
         const progress = (currentQuestion / questions.length) * 100;
-        progressBar.style.width = ${progress}%;
-        progressText.textContent = ${Math.round(progress)}% completo;
+        progressBar.style.width = `${progress}%`;
+        progressText.textContent = `${Math.round(progress)}% completo`;
     }
 
     // Lidar com resposta
@@ -122,11 +122,11 @@ document.addEventListener('DOMContentLoaded', function() {
         resultTitle.textContent = "Missão Concluída!";
         
         if (yesCount > noCount) {
-            resultMessage.textContent = Você é otimista sobre IA! Respondeu "Sim" a ${yesCount} de ${questions.length} perguntas. A IA tem um grande potencial e você reconhece isso.;
+            resultMessage.textContent = `Você é otimista sobre IA! Respondeu "Sim" a ${yesCount} de ${questions.length} perguntas. A IA tem um grande potencial e você reconhece isso.`;
         } else if (noCount > yesCount) {
-            resultMessage.textContent = Você é cauteloso com a IA! Respondeu "Não" a ${noCount} de ${questions.length} perguntas. Sua prudência é importante para o desenvolvimento responsável da tecnologia.;
+            resultMessage.textContent = `Você é cauteloso com a IA! Respondeu "Não" a ${noCount} de ${questions.length} perguntas. Sua prudência é importante para o desenvolvimento responsável da tecnologia.`;
         } else {
-            resultMessage.textContent = Você tem uma visão equilibrada sobre IA! Respondeu igualmente "Sim" e "Não". Manter o equilíbrio é crucial nesse campo em rápida evolução.;
+            resultMessage.textContent = `Você tem uma visão equilibrada sobre IA! Respondeu igualmente "Sim" e "Não". Manter o equilíbrio é crucial nesse campo em rápida evolução.`;
         }
     }
 
